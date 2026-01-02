@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bank of America | Online Banking</title>
+<link rel="stylesheet" href="all-styles.css">
+</head>
+
+<body>
+<!-- STICKY WARNING BANNER -->
+<div id="warningBanner">
+    ⚠️ Important Security Notice: Due to enhanced regulatory compliance measures, all transactional activities are temporarily restricted pending additional verification protocols. Please contact BOA Customer Service for immediate assistance with account access.
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
+    
+    <div class="logo">
+      <img src="images/ttlogo.png" alt="Bank of America Logo" style="height: 400px; max-height: 200px; width: auto;">
+    </div>
+    <span><strong>Online Banking</strong></span>
+
+
+    <div class="header-right">
+      <a onclick="window.location.href='contact.html'" style="cursor: pointer; text-decoration: underline;">
+        <span id="userName">Richard Min</span>
+      </a> | 
+      <a onclick="showNotification('Profile & Settings clicked')">Profile & Settings</a> | 
+      <a onclick="showNotification('Saved Items clicked')">Saved Items</a> | 
+      <a onclick="signOut()">Sign Out</a>
+    </div>
+  </div>
+  
+  <div class="search-container">
+    <div class="search">
+      <input id="searchInput" placeholder="How can we help you?" onkeypress="handleSearch(event)">
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <a onclick="navigate('accounts')">Accounts</a>
+  <a onclick="navigate('billpay')">Bill Pay</a>
+  <a onclick="navigate('transfer')">Transfer | Zelle®</a>
+  <a onclick="navigate('rewards')">Rewards & Deals</a>
+  <a onclick="navigate('tools')">Tools & Investing</a>
+  <a onclick="navigate('open')">Open an Account</a>
+  <a onclick="navigate('help')">Help & Support</a>
+</div>
+
+<!-- MAIN -->
+<div class="wrapper">
+  <div class="account-title">
+    <span id="accountName">BOA Checking</span> 
+    <span class="caret" onclick="showNotification('Account dropdown')">▼</span>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div>
+      <h4>Summary</h4>
+      Available balance (as of <span id="currentDate">today</span>):<br>
+      <span class="balance" id="currentBalance">$2,568,914.37</span><br>
+      <a onclick="showNotification('Balance details')">What does this include?</a><br><br>
+      <a onclick="showNotification('Balance history')">Account balance history »</a>
+    </div>
+    <div>
+      <h4>Features</h4>
+      Keep the Change® savings transfers: <a onclick="showNotification('Enroll Keep Change')">Enroll</a><br>
+      Overdraft protection: <a onclick="showNotification('Enroll Overdraft')">Enroll</a><br>
+      <a onclick="showNotification('More features')">More features »</a>
+    </div>
+    <div>
+      <h4>Services</h4>
+      <a onclick="showNotification('Lock card')">Lock/unlock ATM/debit card</a><br>
+      <a onclick="showNotification('Order checks')">Order checks/deposit slips</a><br>
+      <a onclick="showNotification('Stop payment')">Stop payment on a check</a><br>
+      <a onclick="showNotification('Travel notice')">Set Travel Notice</a><br>
+      <a onclick="showNotification('More services')">More services »</a>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('activity')">Activity</div>
+    <div class="tab" onclick="switchTab('statements')">Statements & Documents</div>
+    <div class="tab" onclick="switchTab('info')">Information & Services</div>
+  </div>
+
+  <div class="content">
+    <!-- LEFT -->
+    <div class="left">
+      <div class="filters">
+        <strong>All Transactions</strong>
+        <a onclick="showNotification('Spending report')">View Spending & Budgeting</a>
+      </div>
+
+      <div class="filters">
+        <input id="searchTransactions" placeholder="Enter keyword, amount or mm/dd/yyyy" oninput="filterTransactions()">
+        <a onclick="showNotification('More options')">More options</a>
+      </div>
+
+      <div class="filters muted">
+        <a onclick="sortNewest()">Newest</a> | 
+        <a onclick="nextPage()">Next</a> | 
+        <a onclick="prevPage()">Previous</a> | 
+        <a onclick="sortOldest()">Oldest</a>
+        &nbsp;&nbsp; Show deals: 
+        <span id="dealsToggle" onclick="toggleDeals()" style="cursor: pointer; color: #0066cc;">On</span> | 
+        <a onclick="downloadTransactions()">Download</a> | 
+        <a onclick="printView()">Print this view</a>
+      </div>
+
+      <div class="table" id="transactionsTable">
+        <div class="thead">
+          <div>Posting Date</div>
+          <div>Description</div>
+          <div>Type</div>
+          <div>Status</div>
+          <div>Amount</div>
+          <div>Available Balance</div>
+        </div>
+
+        <div class="amount-inc">Amount included in Available Balance</div>
+
+        <!-- Transactions will be dynamically loaded here -->
+        <div id="transactionsContainer">
+          <!-- JavaScript will populate this -->
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+      <div class="promo" onclick="showNotification('Open business account')">
+        <div class="head">UP TO $600 BONUS OFFER</div>
+        <div class="body">
+          Small business banking with big benefits
+          <div class="cta">Open an account</div>
+        </div>
+      </div>
+
+      <div class="promo" onclick="showNotification('Cash back deals')">
+        <div class="body">
+          <strong>Cash Back Deals</strong><br><br>
+          Cash back deals on top of rewards you already earn.<br>
+          <a onclick="showNotification('How deals work')">See how deals work</a>
+        </div>
+      </div>
+
+      <div class="promo">
+        <div class="body">
+          <strong>Recent Activity</strong><br><br>
+          <div id="recentActivity">
+            <!-- JavaScript will populate this -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="contact" onclick="showNotification('Contact options')">Contact Us</div>
+
+<!-- SVG Icons -->
+<svg style="display: none;">
+  <!-- Shopping Cart Icon -->
+  <symbol id="icon-cart" viewBox="0 0 24 24">
+    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+  </symbol>
+  
+  <!-- Credit Card Icon -->
+  <symbol id="icon-credit-card" viewBox="0 0 24 24">
+    <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
+  </symbol>
+  
+  <!-- Transfer Icon -->
+  <symbol id="icon-transfer" viewBox="0 0 24 24">
+    <path d="M4 9h12V7H4v2zm0 4h12v-2H4v2zm0 4h8v-2H4v2zm14 0h2v-2h-2v2zm0-10v2h2V7h-2zm0 6h2v-2h-2v2z"/>
+  </symbol>
+  
+  <!-- Payment Icon -->
+  <symbol id="icon-payment" viewBox="0 0 24 24">
+    <path d="M20 8H4V6h16v2zm-2-6H6v2h12V2zm4 10v8c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2v-8c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2zm-6 4l-6-3.27v6.53L16 16z"/>
+  </symbol>
+  
+  <!-- Food Icon -->
+  <symbol id="icon-food" viewBox="0 0 24 24">
+    <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
+  </symbol>
+  
+  <!-- Gas Icon -->
+  <symbol id="icon-gas" viewBox="0 0 24 24">
+    <path d="M18 10V8c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-6c0-1.1-.9-2-2-2zm-6-2h4v2h-4V8zm6 10H8v-6h10v6z"/>
+  </symbol>
+  
+  <!-- Entertainment Icon -->
+  <symbol id="icon-entertainment" viewBox="0 0 24 24">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+  </symbol>
+  
+  <!-- Deposit Icon -->
+  <symbol id="icon-deposit" viewBox="0 0 24 24">
+    <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
+  </symbol>
+  
+  <!-- Withdrawal Icon -->
+  <symbol id="icon-withdrawal" viewBox="0 0 24 24">
+    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+  </symbol>
+  
+  <!-- Fee Icon -->
+  <symbol id="icon-fee" viewBox="0 0 24 24">
+    <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+  </symbol>
+</svg>
+
+<script src="all-scripts.js"></script>
+
+<!-- Font Awesome for mobile menu icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</body>
+</html>
